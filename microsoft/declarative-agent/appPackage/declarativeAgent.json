@@ -1,0 +1,14 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.4/schema.json",
+  "version": "v1.4",
+  "name": "ZiplineOS",
+  "description": "Builds and edits ZiplineOS workflows and forms for your brokerage.",
+  "instructions": "$[file('instruction.txt')]",
+  "conversation_starters": [
+    { "title": "My workflows", "text": "List my ZiplineOS workflows and summarise the fact-find steps." },
+    { "title": "Find questions", "text": "Find every question about income in the home loan fact find." }
+  ],
+  "actions": [
+    { "id": "ziplineos", "file": "ai-plugin.json" }
+  ]
+}

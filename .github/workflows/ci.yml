@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    # Weekly drift and link check (Monday 09:00 AEST).
+    - cron: "0 23 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# TODO(liam): pin every action below to a full commit SHA before publishing.
+jobs:
+  validate:
+    name: Validate manifests and skills
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 scripts/validate.py
+
+  markdown:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: "**/*.md"
+
+  links:
+    name: Link check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config lychee.toml --no-progress "**/*.md" llms.txt
+          fail: true
+
+  drift:
+    name: Tool-name drift check
+    # Needs a test-environment URL and a token for a test account, set as repository
+    # variable/secret. Skips cleanly when they aren't configured.
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 scripts/check_drift.py
+        env:
+          MCP_DRIFT_URL: ${{ vars.MCP_DRIFT_URL }}
+          MCP_DRIFT_TOKEN: ${{ secrets.MCP_DRIFT_TOKEN }}
+
+  release-readiness:
+    name: Unresolved TODOs (informational)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: List TODOs that must be resolved before publishing
+        run: |
+          if grep -rn --exclude-dir=.git --exclude-dir=.github "TODO(" .; then
+            echo "::warning::Unresolved TODOs remain (see above). Resolve before making the repo public."
+          fi

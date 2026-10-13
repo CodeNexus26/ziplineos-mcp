@@ -1,0 +1,41 @@
+# Tool names exposed by the ZiplineOS MCP server, as referenced by the docs and skills.
+# Keep in sync with the server. The drift check (scripts/check_drift.py) compares this list
+# with a live tools/list call.
+add_field
+add_item
+add_step
+apply_conflict_resolutions
+archive_form
+create_draft
+create_form
+create_form_with_fields
+create_workflow
+delete_draft
+delete_field
+delete_item
+delete_step
+discard_form_changes
+discard_release_candidate
+finalize_merge
+get_draft
+get_form
+get_merge_conflicts
+get_workflow
+list_drafts
+list_forms
+list_workflow_documents
+list_workflow_fields
+list_workflows
+merge_draft_into_rc
+move_item
+publish_form
+rename_draft
+reorder_items
+reorder_steps
+search_fields
+switch_editor_context
+unarchive_form
+update_field
+update_item
+update_step
+update_workflow

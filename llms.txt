@@ -1,0 +1,32 @@
+# ZiplineOS AI
+
+> Connect AI assistants (Claude, Claude Code, Microsoft Copilot, ChatGPT) to the ZiplineOS MCP server so they can build and safely edit ZiplineOS workflows and forms for Australian mortgage brokerages. Remote server, Streamable HTTP, OAuth 2.1 + PKCE, scope mcp:workflows. Server URL: https://api.ziplineos.com.au/api/v1/mcp
+
+The user must complete the ZiplineOS sign-in and consent themselves. Microsoft Copilot and ChatGPT are not yet supported (coming soon).
+
+## Start here
+
+- [AGENTS.md](AGENTS.md): step-by-step instructions for an AI agent asked to set up ZiplineOS
+- [README.md](README.md): overview, supported clients, data and control
+
+## Client setup
+
+- [Claude (web, desktop, mobile)](clients/claude.md)
+- [Claude Code](clients/claude-code.md)
+- [Microsoft Copilot: Copilot Studio and Microsoft 365 Copilot](clients/microsoft-copilot.md): coming soon
+- [ChatGPT](clients/chatgpt.md): coming soon
+- [Other MCP clients](clients/other.md)
+
+## Skills (how to use the tools well)
+
+- [build-a-workflow](plugins/ziplineos/skills/build-a-workflow/SKILL.md): build a new workflow, with forms first
+- [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md): draft, merge, resolve conflicts with the human, finalise
+- [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md): keys, types, order, visibility, configJson, PATCH edits
+- [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md): Australian mortgage fact-find shapes
+- [Agent instructions (paste-in)](microsoft/agent-instructions.md): condensed rules for Copilot, ChatGPT and other assistants
+
+## Optional
+
+- [Starter prompts](prompts/README.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [Security, scopes and disconnecting](SECURITY.md)

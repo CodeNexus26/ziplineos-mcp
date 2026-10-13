@@ -1,0 +1,15 @@
+{
+  // Long lines are fine in prose.
+  "MD013": false,
+  // Inline HTML is used for TODO comments.
+  "MD033": false,
+  // Step lists use explicit numbering.
+  "MD029": false,
+  // SKILL.md files start with frontmatter, not a heading, in some tools.
+  "MD041": false,
+  // Fenced code blocks without a language are used for plain URLs and slash commands.
+  "MD040": false,
+  // Compact table delimiter rows (|---|) are fine.
+  "MD060": false,
+  "MD049": { "style": "asterisk" }
+}

@@ -1,0 +1,8 @@
+TODO(liam): choose a licence before this repository is made public.
+
+Until a licence is added, no licence is granted: all rights are reserved by the copyright
+holder.
+
+Options to consider:
+- Documentation and skills: CC BY 4.0, or all rights reserved.
+- Sample code and configuration (plugin manifests, declarative-agent sample): MIT or Apache-2.0.

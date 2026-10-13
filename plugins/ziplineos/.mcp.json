@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ziplineos": {
+      "type": "http",
+      "url": "https://api.ziplineos.com.au/api/v1/mcp"
+    }
+  }
+}

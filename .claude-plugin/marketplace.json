@@ -1,0 +1,12 @@
+{
+  "name": "ziplineos-ai",
+  "description": "ZiplineOS connector and skills for Claude Code.",
+  "owner": { "name": "ZiplineOS" },
+  "plugins": [
+    {
+      "name": "ziplineos",
+      "source": "./plugins/ziplineos",
+      "description": "Connects Claude Code to the ZiplineOS MCP server and adds skills for building and safely editing ZiplineOS workflows and forms."
+    }
+  ]
+}

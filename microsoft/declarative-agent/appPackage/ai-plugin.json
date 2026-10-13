@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+  "schema_version": "v2.4",
+  "name_for_human": "ZiplineOS",
+  "description_for_human": "Build and edit ZiplineOS workflows and forms.",
+  "description_for_model": "ZiplineOS workflow and form authoring tools for an Australian mortgage brokerage: find workflows, forms and questions by name; add and edit questions and show/hide rules; add stages and items; change published workflows through drafts and merges. Ask the user before publishing, archiving, deleting or resolving merge conflicts.",
+  "runtimes": [
+    {
+      "type": "RemoteMCPServer",
+      "spec": { "url": "https://api.ziplineos.com.au/api/v1/mcp" },
+      "auth": { "type": "OAuthPluginVault", "reference_id": "${{ZIPLINEOS_OAUTH_REFERENCE_ID}}" },
+      "run_for_functions": ["*"]
+    }
+  ]
+}

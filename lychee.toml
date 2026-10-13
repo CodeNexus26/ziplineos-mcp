@@ -1,0 +1,9 @@
+# Link checker config (https://lychee.cli.rs).
+exclude = [
+  # The MCP endpoint needs OAuth; it isn't a browsable page.
+  "^https://api\\.ziplineos\\.com\\.au/",
+  # Requires sign-in.
+  "^https://claude\\.ai/",
+  "^https://chatgpt\\.com/",
+]
+accept = [200, 429]
