@@ -5,11 +5,10 @@
 ## Add the server
 
 ```bash
-claude mcp add --transport http --client-id TODO(prod-client-id) \
+claude mcp add --transport http --client-id zipline-mcp \
   ziplineos https://api.ziplineos.com.au/api/v1/mcp
 ```
-<!-- TODO(liam): replace with the production Claude Code client ID. After ZiplineOS supports
-Client ID Metadata Documents, drop --client-id (Claude Code discovers it automatically). -->
+<!-- After ZiplineOS supports Client ID Metadata Documents, drop --client-id. -->
 
 Then, in Claude Code, run `/mcp`, select **ziplineos**, and sign in. Your browser opens the ZiplineOS
 sign-in and consent screen. The consent screen warns that sign-in returns to an app on your

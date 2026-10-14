@@ -29,7 +29,6 @@ finds in ZiplineOS, and the IT admins who connect AI tools for them.
 ```
 https://api.ziplineos.com.au/api/v1/mcp
 ```
-<!-- TODO(liam): confirm the production MCP URL once production is configured. -->
 
 Transport: Streamable HTTP. Auth: OAuth 2.1 with PKCE. You sign in to ZiplineOS and approve
 access on a consent screen. There is nothing to install.

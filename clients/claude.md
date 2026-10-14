@@ -8,11 +8,12 @@ connector switched on for your ZiplineOS organisation.
 
 ## Individual plans (Pro, Max)
 
-1. In Claude, open **Customize → Connectors** and choose **Add custom connector**.
+1. In Claude, open **Customize → Connectors**, choose **+ Add**, then **Add custom connector**.
 2. Name: `ZiplineOS`. URL: `https://api.ziplineos.com.au/api/v1/mcp`
 3. Under the OAuth client options, choose **Use your own OAuth client** and enter
-   Client ID `TODO(prod-client-id)`. Leave the client secret blank.
-   <!-- TODO(liam): replace with the production Claude client ID. Once ZiplineOS supports
+   Client ID `zipline-mcp`. Leave the client secret blank. Don't choose "Use Claude's published
+   identity" or "Register automatically" — ZiplineOS doesn't support them yet.
+   <!-- Once ZiplineOS supports
    Client ID Metadata Documents, switch this step to "Use Claude's published identity". -->
 4. Choose **Add**, then **Connect**.
 5. Sign in to ZiplineOS if asked, check the organisation shown on the consent screen, and choose
