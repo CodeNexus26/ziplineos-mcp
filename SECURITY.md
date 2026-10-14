@@ -4,9 +4,7 @@
 
 Please **don't** open a public GitHub issue for security problems.
 
-<!-- TODO(liam): choose the reporting channel (e.g. a security@ address, and/or enable GitHub
-private vulnerability reporting on this repo) and fill it in below. -->
-Report it privately to: `TODO(security-contact)`
+Report it privately to **[security@ziplineos.com.au](mailto:security@ziplineos.com.au)**.
 
 Include what you found, how to reproduce it, and the impact you think it has. We'll acknowledge your
 report and keep you updated while we investigate. Please give us reasonable time to fix the

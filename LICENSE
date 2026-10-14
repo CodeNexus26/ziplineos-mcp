@@ -1,8 +1,5 @@
-TODO(liam): choose a licence before this repository is made public.
+Copyright (c) 2026 ZiplineOS. All rights reserved.
 
-Until a licence is added, no licence is granted: all rights are reserved by the copyright
-holder.
-
-Options to consider:
-- Documentation and skills: CC BY 4.0, or all rights reserved.
-- Sample code and configuration (plugin manifests, declarative-agent sample): MIT or Apache-2.0.
+No licence is granted to copy, modify or redistribute the contents of this repository, except
+that ZiplineOS customers may use these guides, skills and configuration samples to connect their
+own AI assistants to ZiplineOS.
