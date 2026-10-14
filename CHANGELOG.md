@@ -8,7 +8,7 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 - Repository renamed to `ziplineos-mcp`.
 - Licence: all rights reserved, with use permitted for ZiplineOS customers connecting their own
-  assistants. Security reports go to security@ziplineos.com.au.
+  assistants. Security reports go to `security@ziplineos.com.au`.
 - `SECURITY.md`: the access token now works only on the MCP endpoint, and disconnecting ends
   access straight away (both verified on staging, 14 Oct 2026). Disconnect path is
   **personal settings → Security → Connected AI apps**.
