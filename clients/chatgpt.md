@@ -32,5 +32,5 @@ workspace admin may need to allow developer mode or custom apps first.
 Once ZiplineOS is listed in ChatGPT's app directory, setup will be: **Apps → search
 "ZiplineOS" → Connect**.
 
-To disconnect, remove the app in ChatGPT, and revoke it in ZiplineOS under **personal settings →
+To disconnect, remove the app in ChatGPT, and revoke it in ZiplineOS under **personal settings → Security →
 Connected AI apps**.

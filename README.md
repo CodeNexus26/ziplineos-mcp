@@ -68,7 +68,7 @@ Not sure what to ask first? See [prompts/](prompts/).
 - Information the tools return (workflow, form and question names and settings) is sent to the AI
   provider you connect (for example Anthropic, Microsoft or OpenAI) and handled under that
   provider's terms.
-- You can disconnect any time in ZiplineOS: **personal settings → Connected AI apps**.
+- You can disconnect any time in ZiplineOS: **personal settings → Security → Connected AI apps**.
 - Assistants ask before risky actions, but **read what they plan to do before you approve it.**
 
 See [SECURITY.md](SECURITY.md) for scopes, consent and how to report a security issue.

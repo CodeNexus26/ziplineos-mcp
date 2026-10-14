@@ -4,6 +4,13 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 ## [Unreleased]
 
+### Changed
+
+- Repository renamed to `ziplineos-mcp`.
+- `SECURITY.md`: the access token now works only on the MCP endpoint, and disconnecting ends
+  access straight away (both verified on staging, 14 Oct 2026). Disconnect path is
+  **personal settings → Security → Connected AI apps**.
+
 ### Added
 
 - Setup guides for Claude (web, desktop, mobile), Claude Code, Microsoft Copilot (Copilot Studio

@@ -57,5 +57,5 @@ Team and Enterprise Owners can provide skills to the whole organisation instead.
 - **Asked to sign in again**: sessions expire after a few hours. Choose **Connect** again.
 - More in [docs/troubleshooting.md](../docs/troubleshooting.md).
 
-To disconnect, remove the connector in Claude, and revoke it in ZiplineOS under **personal
-settings → Connected AI apps**.
+To disconnect, remove the connector in Claude, and disconnect it in ZiplineOS under **personal
+settings → Security → Connected AI apps**. Access ends straight away.

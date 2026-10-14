@@ -57,7 +57,7 @@ def rpc(method: str, params: dict | None = None, notify: bool = False):
 rpc("initialize", {
     "protocolVersion": "2025-06-18",
     "capabilities": {},
-    "clientInfo": {"name": "ziplineos-ai-drift-check", "version": "1"},
+    "clientInfo": {"name": "ziplineos-mcp-drift-check", "version": "1"},
 })
 rpc("notifications/initialized", notify=True)
 live, cursor = set(), None

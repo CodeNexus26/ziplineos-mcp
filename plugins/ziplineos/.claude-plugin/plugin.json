@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Connects Claude Code to the ZiplineOS MCP server and adds skills for building and safely editing ZiplineOS workflows and forms.",
   "author": { "name": "ZiplineOS" },
-  "homepage": "https://github.com/CodeNexus26/ziplineos-ai",
-  "repository": "https://github.com/CodeNexus26/ziplineos-ai",
+  "homepage": "https://github.com/CodeNexus26/ziplineos-mcp",
+  "repository": "https://github.com/CodeNexus26/ziplineos-mcp",
   "keywords": ["ziplineos", "mcp", "workflows", "forms", "mortgage-broking"]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "ziplineos-ai",
+  "name": "ziplineos-mcp",
   "description": "ZiplineOS connector and skills for Claude Code.",
   "owner": { "name": "ZiplineOS" },
   "plugins": [

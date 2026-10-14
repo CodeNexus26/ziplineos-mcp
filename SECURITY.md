@@ -19,12 +19,16 @@ itself (including the MCP server and its sign-in) should be reported through the
 
 - **Sign-in and consent.** Connecting sends you to ZiplineOS to sign in. The consent screen shows
   the organisation and explains that approving lets the app act in ZiplineOS **as you, using
-  your access**, for a limited time. Only approve if you started the connection yourself. If the
+  your access**, for up to 90 days (the app renews a short-lived access token behind the scenes).
+  If the app goes unused for 30 days, you'll need to connect it again. Only approve if you started the connection yourself. If the
   screen says sign-in returns to an app on your computer and you didn't just start one (for example
   Claude Code), choose **Deny**.
 - **Scope.** The connector requests the `mcp:workflows` scope. The MCP server only provides
   tools for building and editing workflows and forms in your own organisation. It doesn't
   provide tools for deals, contacts, documents or messages.
+- **The token only works on the MCP server.** The access token the app receives is accepted by
+  the ZiplineOS MCP endpoint and nothing else: it can't call the rest of the ZiplineOS API, it
+  can't be used as a ZiplineOS sign-in session, and it can't approve new connections.
 - **Your permissions apply.** The assistant can only see and change what your ZiplineOS account
   can. Each person connects with their own account.
 - **Confirmation prompts.** Every tool is labelled as read-only, additive or destructive, so your
@@ -37,9 +41,10 @@ itself (including the MCP server and its sign-in) should be reported through the
 
 ## Disconnecting
 
-- **In ZiplineOS:** open your **personal settings → Connected AI apps** and revoke the app. The
-  app can't renew its access after that. A session it already holds may keep working until it
-  expires a short time later.
+- **In ZiplineOS:** open your **personal settings → Security → Connected AI apps** and click
+  **Disconnect**. That connection loses access straight away: its current access token stops
+  working and it can't renew. If you connected the same app more than once (for example Claude
+  on the web and in Claude Code), each connection is listed and disconnected separately.
 - **In the AI tool:** remove the ZiplineOS connector or MCP server too.
 - **Microsoft Copilot (organisation-wide):** a ZiplineOS admin can revoke the organisation's
   Microsoft credentials, which disconnects everyone using that agent.

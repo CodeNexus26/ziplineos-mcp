@@ -24,9 +24,9 @@ add it for just yourself.
 Copy the skill folders into your personal skills directory:
 
 ```bash
-git clone https://github.com/CodeNexus26/ziplineos-ai.git
+git clone https://github.com/CodeNexus26/ziplineos-mcp.git
 mkdir -p ~/.claude/skills
-cp -R ziplineos-ai/plugins/ziplineos/skills/* ~/.claude/skills/
+cp -R ziplineos-mcp/plugins/ziplineos/skills/* ~/.claude/skills/
 ```
 
 ## Plugin (server and skills in one step)
@@ -35,8 +35,8 @@ cp -R ziplineos-ai/plugins/ziplineos/skills/* ~/.claude/skills/
 > that Claude Code can sign in without a client ID. Until then, use the two steps above.
 
 ```
-/plugin marketplace add CodeNexus26/ziplineos-ai
-/plugin install ziplineos@ziplineos-ai
+/plugin marketplace add CodeNexus26/ziplineos-mcp
+/plugin install ziplineos@ziplineos-mcp
 ```
 
 After installing, run `/mcp` and sign in to the ZiplineOS server provided by the plugin.

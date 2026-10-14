@@ -76,4 +76,4 @@ A starting sample is in [`microsoft/declarative-agent/`](../microsoft/declarativ
 - To rotate the client secret, generate a new one in ZiplineOS and update the connector. The old
   secret stays valid for a short overlap.
 - To remove access for everyone, revoke the credentials in ZiplineOS. Individual brokers can
-  disconnect under **personal settings → Connected AI apps**.
+  disconnect under **personal settings → Security → Connected AI apps**.
