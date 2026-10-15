@@ -82,8 +82,9 @@ step** and a default **Primary Applicant** role.
   trigger: test deals still receive it, `onStepView` / `onItemView` fire on every view (the connector
   refuses them on integrations and email/SMS actions), and an Equifax run is a paid enquiry. On a
   live workflow it also refuses rule, config or cross-step moves on an item that already has a
-  trigger. Switching a trigger to manual or clearing a delay is always allowed, but runs already
-  scheduled still go ahead.
+  trigger. Switching a trigger to manual (optionally clearing its delay) is always allowed, but runs
+  already scheduled still go ahead. Clearing only the delay of an item that still has a trigger
+  makes it run immediately, so it's treated like any other trigger change.
 
 ## 5. Verify and hand over
 
