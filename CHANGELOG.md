@@ -7,6 +7,10 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 ### Changed
 
 - Repository renamed to `ziplineos-mcp`.
+- Skills and paste-in instructions: Action and Integration items use the connector's typed
+  `action` / `integration` specs, with `list_workflow_roles` and `list_integration_providers` for
+  lookups. Webhook integrations aren't supported, and an Equifax run must be confirmed first
+  (paid). Rules use `set_item_rules` / `set_step_rules`. Needs the matching ZiplineOS release.
 - Licence: all rights reserved, with use permitted for ZiplineOS customers connecting their own
   assistants. Security reports go to `security@ziplineos.com.au`.
 - `SECURITY.md`: the access token now works only on the MCP endpoint, and disconnecting ends

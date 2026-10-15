@@ -19,12 +19,16 @@ discard_release_candidate
 finalize_merge
 get_draft
 get_form
+get_item
 get_merge_conflicts
+get_step
 get_workflow
 list_drafts
 list_forms
+list_integration_providers
 list_workflow_documents
 list_workflow_fields
+list_workflow_roles
 list_workflows
 merge_draft_into_rc
 move_item
@@ -33,6 +37,8 @@ rename_draft
 reorder_items
 reorder_steps
 search_fields
+set_item_rules
+set_step_rules
 switch_editor_context
 unarchive_form
 update_field
