@@ -75,9 +75,12 @@ step** and a default **Primary Applicant** role.
   `isInternalOnly`, and the typed `action` / `integration` (fields you pass replace the stored
   ones; changing the action type or provider replaces the whole config). Read the current state first with `get_item`. Set rules with `set_item_rules` /
   `set_step_rules`.
-- Action and Integration items don't run on their own yet: they need an execution trigger, which
-  the connector can't set. Tell the user to set the trigger in ZiplineOS, or run the item by hand
-  from the deal.
+- Action and Integration items only run on their own once they have an execution trigger
+  (`executionTrigger`: `onStepEnter`, `onStepExit`, `onStepView` or `onItemView`) and, optionally,
+  a `delay`. The connector sets these **only on a Draft workflow with no live deals**. On a live
+  workflow, tell the user to set the trigger in ZiplineOS. Confirm with the user before adding a
+  trigger: test deals still receive it, `onStepView` / `onItemView` fire on every view (the connector
+  refuses them on integrations and email/SMS actions), and an Equifax run is a paid enquiry.
 
 ## 5. Verify and hand over
 

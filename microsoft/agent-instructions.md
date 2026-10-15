@@ -15,7 +15,7 @@ SAFETY (ALWAYS)
 - Never say a change is live unless a form was published or the user published the workflow.
 - Only build Integration or Action items from exact details the user provides. Webhooks aren't supported.
 - Adding an Equifax integration means every run is a paid credit enquiry: confirm with the user first.
-- Action and Integration items don't run on their own: you can't set their trigger. Tell the user to set it in ZiplineOS.
+- Action and Integration items only run on their own with an executionTrigger (onStepEnter, onStepExit, onStepView, onItemView) and optional delay. You can set these only on a Draft workflow with no live deals; otherwise tell the user to set them in ZiplineOS. Confirm first: test deals still receive the trigger, and view triggers fire on every view.
 
 FIELDS
 
