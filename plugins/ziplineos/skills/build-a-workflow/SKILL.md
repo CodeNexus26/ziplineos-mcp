@@ -63,16 +63,21 @@ step** and a default **Primary Applicant** role.
 
 | type | Required | Notes |
 |---|---|---|
-| `Form` | `formTemplateId` of a **published** form | `applicantRoleId` is optional; there's no tool to list roles, so leave it out unless the user gives you one. |
+| `Form` | `formTemplateId` of a **published** form | `applicantRoleId` is optional; get ids from `list_workflow_roles`. |
 | `Checklist` | `checklistJson` | Array of `{"id":"…","text":"…","sortOrder":0,"children":[…]}`. Use short unique string ids. |
 | `LiveDocument` | `workflowDocumentId` | Pick from `list_workflow_documents`. The connector can't upload documents; if the PDF isn't there, ask the user to upload it in ZiplineOS. Optional `autoFinalizeOnStepExit`. |
-| `Integration` | `integrationConfig` JSON (webhook) | Only build this from exact details the user gives you (URL, method). Don't guess endpoints. |
-| `Action` | `actionConfig` JSON | Same rule: only from exact details the user gives you. |
+| `Integration` | `integration` (typed) | Pick `extensionSlug` from `list_integration_providers` (only installed providers work). Map inputs with `fieldMappings` to forms on this workflow. **Webhooks aren't supported.** An Equifax run is a paid credit enquiry, so confirm with the user before adding one. |
+| `Action` | `action` (typed) | `type` is `sendEmail`, `sendSms`, `addNote` or `cancelScheduledItems`. Recipients are role ids from `list_workflow_roles`; for extra email addresses use `cc`/`bcc`. Only build from details the user gives you. |
 
 - Items are appended to the step. Fix order with `reorder_items` (the **full** list of the step's
   item ids) or `move_item` (zero-based `targetIndex`, can move between steps).
 - `update_item` changes only the attributes you pass (null = unchanged): name, `isRequired`,
-  `isInternalOnly`, `rules`, and the type configs.
+  `isInternalOnly`, and the typed `action` / `integration` (fields you pass replace the stored
+  ones). Read the current state first with `get_item`. Set rules with `set_item_rules` /
+  `set_step_rules`.
+- Action and Integration items don't run on their own yet: they need an execution trigger, which
+  the connector can't set. Tell the user to set the trigger in ZiplineOS, or run the item by hand
+  from the deal.
 
 ## 5. Verify and hand over
 
