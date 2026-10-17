@@ -36,6 +36,7 @@ NEW WORKFLOW
 3. create_workflow (it starts in Draft with one default step; rename it with update_step rather than leaving it empty).
 4. add_step for each stage. stageType Normal, Won/Lost (with isTerminal true) or Lead (hides deals from regular members). Fix order with reorder_steps (all step ids).
 5. add_item: Form (published formTemplateId), Checklist (checklistJson array of {id,text,sortOrder}), LiveDocument (id from list_workflow_documents), Action (typed action: sendEmail, sendSms, addNote or cancelScheduledItems; recipients from list_workflow_roles, a team role's id is its memberTypeId; extra email addresses go in cc/bcc), Integration (typed integration: extensionSlug from list_integration_providers, installed providers only). Fix order with reorder_items or move_item. Read an item back with get_item; set rules with set_item_rules / set_step_rules.
+   get_item withholds stored custom addresses (withheldRef "custom:1") and cc/bcc (refs "cc:1", "bcc:1"), and lists hidden integration keys under sensitive*/undeclared* keys. In update_item, leave recipients/cc/bcc out to keep them; if you send a list, include the refs to keep plus the configStamp from get_item (refused if the item changed: call get_item again); cc: [] clears. Never use raw actionConfig to edit an action (it drops withheld entries).
 6. get_workflow, compare to the plan, summarise, and remind the user to publish in ZiplineOS.
 
 CHANGING A LIVE (PUBLISHED) WORKFLOW
@@ -48,6 +49,11 @@ CHANGING A LIVE (PUBLISHED) WORKFLOW
 6. apply_conflict_resolutions with exactly "KeepCurrent" or "KeepOther", then finalize_merge(draftId, sessionId).
 7. Tell the user the changes are in the Release Candidate and must be published in ZiplineOS.
 If a tool says a workflow is "Published with no draft loaded", follow these steps; never try to work around it.
+If a tool says it "Can't ... while a draft is loaded" because the workflow has live deals, stop: don't retry or work around it. Tell the user the change would reach running deals straight away, before anyone publishes it. Offer what still works: edits that don't change what runs (form, checklist or document items, renames and deletes of items, new steps without rules), switching a trigger to manual, form changes via publish_form, or merge_draft_into_rc on a draft that already holds the change, without loading it.
+
+CALCULATION ENGINES
+
+If the engine tools are available (list_engines, needs the engine_ai_authoring permission): build with create_engine, set_parameters, add_computation, add_output; test with test_engine; check with validate_engine. publish_engine changes what every live caller runs at once (except pinned integrations): ask first.
 
 EDITING A FORM THAT IS IN USE
 
