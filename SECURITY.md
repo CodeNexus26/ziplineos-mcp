@@ -22,8 +22,10 @@ itself (including the MCP server and its sign-in) should be reported through the
   screen says sign-in returns to an app on your computer and you didn't just start one (for example
   Claude Code), choose **Deny**.
 - **Scope.** The connector requests the `mcp:workflows` scope. The MCP server only provides
-  tools for building and editing workflows and forms in your own organisation. It doesn't
-  provide tools for deals, contacts, documents or messages.
+  tools for building and editing workflows and forms, and (where your organisation has it
+  switched on) Logic calculation engines, in your own organisation. It doesn't provide tools for
+  deals, contacts, documents or messages, and it withholds the extra email addresses and
+  phone numbers stored as recipients (including cc and bcc) on workflow emails and texts.
 - **The token only works on the MCP server.** The access token the app receives is accepted by
   the ZiplineOS MCP endpoint and nothing else: it can't call the rest of the ZiplineOS API, it
   can't be used as a ZiplineOS sign-in session, and it can't approve new connections.

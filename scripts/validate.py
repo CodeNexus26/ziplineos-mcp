@@ -115,7 +115,7 @@ known = {
 }
 TOOL_RE = re.compile(
     r"\b((?:create|add|update|delete|list|get|search|publish|discard|archive|unarchive|move|"
-    r"reorder|rename|switch|merge|apply|finalize|set)_[a-z_]+)\b"
+    r"reorder|rename|switch|merge|apply|finalize|set|test|validate)_[a-z_]+)\b"
 )
 docs = skill_files + [src, ROOT / "AGENTS.md", ROOT / "docs/troubleshooting.md"]
 for doc in docs:

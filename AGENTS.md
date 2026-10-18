@@ -10,7 +10,8 @@ through it. Follow these steps in order. Don't invent settings that aren't in th
 - No Dynamic Client Registration. The client must be one ZiplineOS already recognises.
 - The user signs in to ZiplineOS in a browser and approves a consent screen. **You can't do this
   for them.** Never ask for their password, and never type credentials for them.
-- Tools only cover authoring workflows and forms in the user's own organisation.
+- Tools only cover authoring workflows, forms and (where the organisation has it switched on)
+  Logic calculation engines in the user's own organisation.
 
 ## 1. Work out the client
 
@@ -61,8 +62,10 @@ Read the skills before you change anything. The rules that matter most:
 - Resolve workflows and forms **by name**. Never ask the user for ids.
 - `update_field`, `update_step` and `update_item` change only what you pass. Never re-send
   unchanged attributes.
-- Ask before publishing a form that is in use, archiving, deleting, discarding, or resolving and
-  finalising a merge.
+- Ask before publishing a form that is in use, publishing a calculation engine, archiving,
+  deleting, discarding, or resolving and finalising a merge.
 - Published workflows are changed only through `create_draft` → `switch_editor_context` → edit →
   `merge_draft_into_rc` → (resolve with the user) → `finalize_merge`. Publishing a workflow is
   done by a person in ZiplineOS.
+- If an edit is refused because a draft is loaded on a workflow with live deals, don't retry or
+  work around it. Explain it to the user (see the `edit-a-published-workflow` skill).

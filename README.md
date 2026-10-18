@@ -15,11 +15,14 @@ An AI assistant that supports MCP can sign in **as you** and use ZiplineOS tools
 - create forms and add, edit, reorder, show/hide or remove questions;
 - create workflows and add or rearrange stages and items (forms, checklists, documents);
 - change a live workflow safely through a draft, merging the changes into the next version, with
-  you confirming any conflicts.
+  you confirming any conflicts;
+- where your organisation has it switched on, build, test and publish Logic calculation engines.
 
-It **can't** publish a workflow to live deals; you do that in ZiplineOS. It can only see and change what
+It **can't** publish a workflow to live deals; you do that in ZiplineOS. It can publish a
+calculation engine, but only after you say yes. It can only see and change what
 your own ZiplineOS account can, in your own organisation. It doesn't read or change deals, contacts or
-client data.
+client data, and it withholds the extra email addresses and phone numbers stored as recipients
+(including cc and bcc) on workflow emails and texts.
 
 **Who it's for:** brokers, practice managers and operations staff who set up workflows and fact
 finds in ZiplineOS, and the IT admins who connect AI tools for them.
@@ -55,6 +58,7 @@ stop and ask you before anything goes live.
 | [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md) | Draft → merge → resolve conflicts, and editing forms that are in use |
 | [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md) | Keys, types, ordering, show/hide rules, money fields, safe edits |
 | [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md) | Common shapes for Australian mortgage fact finds |
+| [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md) | Building, testing and publishing a Logic calculation engine |
 
 Each client guide explains how to load them. For Microsoft Copilot and ChatGPT, paste
 [microsoft/agent-instructions.md](microsoft/agent-instructions.md) into the agent's instructions.

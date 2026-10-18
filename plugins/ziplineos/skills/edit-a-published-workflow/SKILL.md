@@ -30,9 +30,12 @@ Forms work differently: they're versioned on their own (see "Editing forms that 
 3. **Load the draft.** `switch_editor_context(workflowTemplateId, target:"Draft", draftId)`.
    This changes which version the workflow editor has open, for this workflow, in ZiplineOS.
    Tell the user before you do it, in case a colleague is editing the same workflow.
+   If the workflow has live deals and the draft already changes how they run, loading it is
+   refused (see "When an edit is refused because of live deals" below).
 4. **Edit.** Use the normal structure tools (`add_step`, `update_step`, `add_item`,
    `update_item`, `move_item`, `reorder_*`, `delete_*`). With the draft loaded, edits land on the
    draft, not the live workflow. `update_step` and `update_item` change only what you pass.
+   On a workflow with live deals, some of these edits are refused; see the next section.
 5. **Review with the user.** `get_workflow`, then summarise the differences from what was there.
 6. **Merge.** `merge_draft_into_rc(draftId)`.
    - `conflictsRequireResolution: false`: done. The RC now holds the changes.
@@ -50,6 +53,55 @@ Forms work differently: they're versioned on their own (see "Editing forms that 
 8. **Hand over.** Tell the user the changes are in the Release Candidate and must be **published
    in ZiplineOS** to reach live deals. Ask whether to switch the editor back to the RC
    (`switch_editor_context(target:"Rc")`).
+
+## When an edit is refused because of live deals
+
+While a draft is loaded, the published workflow's steps and items **are** the draft: ZiplineOS
+writes the draft into the same tables live deals run from. So on a published workflow that has
+live deals (test deals don't count), ZiplineOS refuses any edit that would change what those deals
+run **straight away**, even though the draft isn't published. The refusal starts *"Can't … while a
+draft is loaded: this workflow is published and has live deals"* (in ZiplineOS's own API it is a
+409 with code `workflow_draft_live_guard`). The same rule applies in the ZiplineOS editor, not
+just the connector.
+
+Refused while a draft is loaded and live deals exist:
+
+- An item's trigger or delay, its Action/Integration config (even on a manual item, because a
+  person can still run it), or its reactions. Also the rules of an item that runs on its own (it
+  has an automatic trigger or a delay).
+- Adding an item that runs on its own, has reactions, or is an Action/Integration with config.
+- Moving an item that runs on its own to another step.
+- Step rules: changing enabled rules, or turning them on or off. Adding a step with rules on.
+- On steps live deals can be on: renaming, deleting, changing `isTerminal` or `stageType`,
+  changing their order relative to each other, and flipping `isRequired` on an existing item.
+- Loading (`switch_editor_context`) a draft that **already** contains any of those changes, for
+  example one written while the workflow had no live deals, or one updated by a merge.
+- In ZiplineOS, setting the workflow back to Draft while it has live deals.
+
+When this happens:
+
+1. **Stop. Don't retry and don't work around it.** Don't try another tool, a raw-JSON parameter,
+   a different draft or an unpublished-then-republished workflow to get the same change in.
+2. **Explain it plainly**, for example: "ZiplineOS won't let me change that while this workflow
+   has live deals. The draft is stored in the same place those deals run from, so the change would
+   reach them straight away, before anyone has published it."
+3. **Say what still works**, and let the user choose:
+   - Edits that don't change what runs: adding Form, Checklist or document items, renaming
+     items, deleting items, repositioning an item within its step, adding a step without rules, and
+     renaming, re-staging, reordering or deleting a step that exists only in this draft and has
+     no live deals on it. Show/hide rules on items that don't run on their own, and step rules
+     that stay switched off, are also fine.
+   - Switching an item's trigger to manual (a disarm) is always allowed. Runs already scheduled
+     on deals still go ahead.
+   - Question and form changes: forms are versioned on their own. Edit the form and use
+     `publish_form` after the user agrees (see below).
+   - A draft that already holds the change can still go live without being loaded:
+     `merge_draft_into_rc(draftId)` merges it into the Release Candidate, and a person publishes
+     the RC in ZiplineOS. If `switch_editor_context` refused to load a draft, offer this. If
+     another draft is loaded now, switching to the RC first can also make a different draft
+     loadable, because the check compares against what is loaded.
+   - Otherwise the change has to wait until no live deals run on the workflow, or the user makes
+     it in a copy of the workflow that isn't live yet.
 
 ## Editing forms that are in use
 
@@ -81,6 +133,8 @@ confirmation:
 
 - Don't try to work around *"Published with no draft loaded"*. That error is the safety rail;
   follow the procedure above.
+- Don't retry or route around a *"while a draft is loaded … has live deals"* refusal. It protects
+  live deals from unpublished changes.
 - Don't tell the user a change is live after `finalize_merge` or after editing a form without
   publishing. It isn't.
 - Don't batch unrelated changes into one draft without telling the user. One draft per change

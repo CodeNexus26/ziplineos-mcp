@@ -67,18 +67,36 @@ step** and a default **Primary Applicant** role.
 | `Checklist` | `checklistJson` | Array of `{"id":"…","text":"…","sortOrder":0,"children":[…]}`. Use short unique string ids. |
 | `LiveDocument` | `workflowDocumentId` | Pick from `list_workflow_documents`. The connector can't upload documents; if the PDF isn't there, ask the user to upload it in ZiplineOS. Optional `autoFinalizeOnStepExit`. |
 | `Integration` | `integration` (typed) | Pick `extensionSlug` from `list_integration_providers` (only installed providers work). Map inputs with `fieldMappings` to forms on this workflow. **Webhooks aren't supported.** An Equifax run is a paid credit enquiry, so confirm with the user before adding one. |
-| `Action` | `action` (typed) | `type` is `sendEmail`, `sendSms`, `addNote` or `cancelScheduledItems`. Recipients are `{kind, id}` with kind `applicantRole` or `teamRole`, from `list_workflow_roles` (a team role's id is its `memberTypeId`). Extra email addresses go in `cc`/`bcc`; SMS can take a custom phone number. Only build from details the user gives you. |
+| `Action` | `action` (typed) | `type` is `sendEmail`, `sendSms`, `addNote` or `cancelScheduledItems`. Recipients are `{kind, id}` with kind `applicantRole` or `teamRole`, from `list_workflow_roles` (a team role's id is its `memberTypeId`). Extra email addresses go in `cc`/`bcc`; SMS can take a custom phone number (`{kind:"custom", address}`). Only build from details the user gives you. `get_item` never shows stored custom addresses: a custom recipient comes back as `addressWithheld: true` with a `withheldRef` (`custom:1`), and stored cc/bcc addresses come back as refs (`cc:1`, `bcc:1`) with `ccWithheldCount` / `bccWithheldCount`. |
 
 - Items are appended to the step. Fix order with `reorder_items` (the **full** list of the step's
   item ids) or `move_item` (zero-based `targetIndex`, can move between steps).
 - `update_item` changes only the attributes you pass (null = unchanged): name, `isRequired`,
   `isInternalOnly`, and the typed `action` / `integration` (fields you pass replace the stored
-  ones; changing the action type or provider replaces the whole config). Read the current state first with `get_item`. Set rules with `set_item_rules` /
-  `set_step_rules`.
+  ones; changing the action type or provider replaces the whole config). Read the current state
+  first with `get_item`. Set rules with `set_item_rules` / `set_step_rules`.
+  - **Withheld recipients and cc/bcc.** Leave `recipients`, `cc` or `bcc` out of the patch to keep
+    them exactly as stored. If you do send one of those lists, it replaces the stored list, so
+    echo what you want to keep by ref: `{"kind":"custom","withheldRef":"custom:1"}` for a custom
+    recipient, `"cc:1"` / `"bcc:2"` for a cc/bcc address. Any patch that uses a ref must also pass
+    the `configStamp` that `get_item` returned. If the item changed since you read it, the patch is
+    refused: call `get_item` again and use the new refs and stamp. `cc: []` (or `bcc: []`) removes
+    them all. A custom recipient sent with neither an address nor a `withheldRef` is refused, and
+    so is a non-empty cc/bcc list with no refs while stored addresses exist (include the refs, or
+    clear with `[]` first). Never guess or ask the user to repeat a withheld address just to keep it.
+  - Don't use the raw `actionConfig` to edit an existing action: it replaces the whole config and
+    drops any withheld recipient or cc/bcc address it doesn't spell out. Use the typed `action`.
+  - Integration items: `get_item` hides some stored values. Keys the provider declares but whose
+    names look personal or secret (e.g. `dateOfBirth`) are listed under `sensitiveParameterKeys` /
+    `sensitiveInputKeys`; keys the provider doesn't declare are listed under
+    `undeclaredParameterKeys` / `undeclaredInputKeys`. A typed `integration` patch keeps all of
+    them even when you send `parameters` / `inputValues`; drop one only with `removeParameterKeys`
+    / `removeInputKeys`, and only when the user asks.
 - Action and Integration items only run on their own once they have an execution trigger
   (`executionTrigger`: `onStepEnter`, `onStepExit`, `onStepView` or `onItemView`) and, optionally,
   a `delay`. The connector sets these **only on a Draft workflow with no live deals**. On a live
-  workflow, tell the user to set the trigger in ZiplineOS. Confirm with the user before adding a
+  workflow, tell the user to set the trigger in ZiplineOS (where it is also locked while a draft is
+  loaded and live deals run on the workflow; see `edit-a-published-workflow`). Confirm with the user before adding a
   trigger: test deals still receive it, `onStepView` / `onItemView` fire on every view (the connector
   refuses them on integrations and email/SMS actions), and an Equifax run is a paid enquiry. On a
   live workflow it also refuses rule, config or cross-step moves on an item that already has a
@@ -102,3 +120,6 @@ step** and a default **Primary Applicant** role.
 - *"Item was not created … any linked form is published"*: publish the form first, or check the
   ids.
 - *"Item type '…' is not supported yet"*: only the five types above are available.
+- *"Can't … while a draft is loaded: this workflow is published and has live deals …"*: the
+  live-deal guard. Don't retry; follow "When an edit is refused because of live deals" in the
+  `edit-a-published-workflow` skill.

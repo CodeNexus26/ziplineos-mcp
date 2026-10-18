@@ -6,6 +6,17 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 ### Changed
 
+- Synced with the ZiplineOS server as of 17 Oct 2026 (ziplineos#3689, #3696, #3706, #3708). Needs
+  the ZiplineOS release that includes them.
+  - `get_item` withholds custom recipient addresses (`addressWithheld` + `withheldRef`) and cc/bcc
+    addresses (refs `cc:N` / `bcc:N`), and returns a `configStamp`. The skills and paste-in
+    instructions explain keeping them by ref with the stamp, clearing with `[]`, and avoiding a raw
+    `actionConfig` rewrite. Hidden integration keys are listed under `sensitive*Keys` /
+    `undeclared*Keys`.
+  - `edit-a-published-workflow`: the live-deal guard. While a draft is loaded on a published
+    workflow with live deals, edits that change what those deals run are refused. The skill says
+    to stop, explain, and offer what still works (including merging a draft without loading it).
+  - README, `AGENTS.md`, `SECURITY.md` and `llms.txt` mention the calculation engine tools.
 - Repository renamed to `ziplineos-mcp`.
 - Skills and paste-in instructions: Action and Integration items use the connector's typed
   `action` / `integration` specs, with `list_workflow_roles` and `list_integration_providers` for
@@ -19,6 +30,11 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
   **personal settings → Security → Connected AI apps**.
 
 ### Added
+
+- Skill `build-a-calculation-engine`: build → test → validate → publish for Logic Custom
+  calculation engines, using the 18 engine tools (behind the `engine_ai_authoring` permission).
+  `scripts/known-tools.txt` lists them, and `validate.py` now also checks `test_*` / `validate_*`
+  tool names.
 
 - Setup guides for Claude (web, desktop, mobile), Claude Code, Microsoft Copilot (Copilot Studio
   and Microsoft 365 Copilot; coming soon), ChatGPT (coming soon) and other MCP clients.
