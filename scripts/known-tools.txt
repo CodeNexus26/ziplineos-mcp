@@ -2,6 +2,7 @@
 # Keep in sync with the server. The drift check (scripts/check_drift.py) compares this list
 # with a live tools/list call.
 add_computation
+add_document_category
 add_field
 add_item
 add_output
@@ -14,6 +15,7 @@ create_form
 create_form_with_fields
 create_workflow
 delete_computation
+delete_document_category
 delete_draft
 delete_engine
 delete_field
@@ -24,6 +26,8 @@ delete_workflow
 discard_form_changes
 discard_release_candidate
 finalize_merge
+get_branding
+get_document_ai_settings
 get_draft
 get_engine
 get_engine_versions
@@ -58,7 +62,10 @@ switch_editor_context
 test_engine
 test_integration
 unarchive_form
+update_branding
 update_computation
+update_document_ai_settings
+update_document_category
 update_engine
 update_field
 update_item

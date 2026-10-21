@@ -6,6 +6,16 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 ### Changed
 
+- Org settings tools (ziplineos#3813). Needs the ZiplineOS release that includes it.
+  - New tools: `get_branding`, `update_branding`, `get_document_ai_settings`,
+    `update_document_ai_settings`, `add_document_category`, `update_document_category` and
+    `delete_document_category`. They act on the user's own organisation only and need the Owner or
+    Admin role. The document tools also need the AI Document Settings (`drive_ai`) permission.
+  - `update_branding` sets the brand colour (`#RRGGBB`) and logos (https URL only) and returns
+    `advice` on logo tone, plates, a needed alternate logo and contrast. Changes are recorded in
+    the audit log.
+  - New skill `set-up-branding-and-documents`; the paste-in instructions, README, AGENTS.md and
+    llms.txt mention the tools. Skills say to confirm first.
 - Synced with the ZiplineOS server as of 21 Oct 2026 (ziplineos#3753, #3759, #3793). Needs the
   ZiplineOS release that includes them.
   - New tools: `delete_workflow` (Draft workflow with no deals), `delete_engine` (never published,
