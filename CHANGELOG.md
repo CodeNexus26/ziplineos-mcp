@@ -6,6 +6,22 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 ### Changed
 
+- Synced with the ZiplineOS server as of 21 Oct 2026 (ziplineos#3753, #3759, #3793). Needs the
+  ZiplineOS release that includes them.
+  - New tools: `delete_workflow` (Draft workflow with no deals), `delete_engine` (never published,
+    not used anywhere) and `test_integration` (runs a calc-engine Integration item once on sample
+    answers; no deal, nothing saved). Skills and paste-in instructions say to ask first.
+  - Calc engine Switch case keys match ignoring case; keys that differ only by case are refused at
+    publish. A new engine's first publish is version 1. `delete_computation` / `delete_output`
+    renumber the rest. Renaming an engine or editing its description marks it as having
+    unpublished changes.
+  - `resultsDisplay` on Integration items picks the result card (`default` with `fieldNames`,
+    `quote-estimate`, `repayment-savings`). `update_item` `clearResultsDisplay` removes it.
+  - `assignedRoleId` assigns an item to a team role (not with an applicant role).
+    `clearAssignedRole` removes it. Neither change is blocked by the live-deal guard, so confirm
+    first on a live workflow.
+  - Refusals now say why. The skills tell the agent to read the message and fix the call.
+  - Reactions are not advertised; the skills now say "automatic follow-ups set up in ZiplineOS".
 - Synced with the ZiplineOS server as of 17 Oct 2026 (ziplineos#3689, #3696, #3706, #3708). Needs
   the ZiplineOS release that includes them.
   - `get_item` withholds custom recipient addresses (`addressWithheld` + `withheldRef`) and cc/bcc
