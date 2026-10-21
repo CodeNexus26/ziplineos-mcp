@@ -13,7 +13,9 @@ An AI assistant that supports MCP can sign in **as you** and use ZiplineOS tools
 
 - find workflows, forms and questions by name;
 - create forms and add, edit, reorder, show/hide or remove questions;
-- create workflows and add or rearrange stages and items (forms, checklists, documents);
+- create workflows and add or rearrange stages and items (forms, checklists, documents), set an
+  Integration item's results display or a team role on an item, test a calculation integration on
+  sample answers, and delete a Draft workflow that has no deals;
 - change a live workflow safely through a draft, merging the changes into the next version, with
   you confirming any conflicts;
 - where your organisation has it switched on, build, test and publish Logic calculation engines.

@@ -67,13 +67,16 @@ just the connector.
 Refused while a draft is loaded and live deals exist:
 
 - An item's trigger or delay, its Action/Integration config (even on a manual item, because a
-  person can still run it), or its reactions. Also the rules of an item that runs on its own (it
+  person can still run it), or its automatic follow-ups set up in ZiplineOS. Also the rules of an item that runs on its own (it
   has an automatic trigger or a delay).
-- Adding an item that runs on its own, has reactions, or is an Action/Integration with config.
+- Adding an item that runs on its own, has automatic follow-ups set up in ZiplineOS, or is an Action/Integration with config.
 - Moving an item that runs on its own to another step.
 - Step rules: changing enabled rules, or turning them on or off. Adding a step with rules on.
 - On steps live deals can be on: renaming, deleting, changing `isTerminal` or `stageType`,
   changing their order relative to each other, and flipping `isRequired` on an existing item.
+- Not refused, because they only change presentation: an Integration item's `resultsDisplay` and
+  an item's `assignedRoleId`. With a draft loaded and live deals, they change what live clients and
+  teams see immediately. Confirm with the user first.
 - Loading (`switch_editor_context`) a draft that **already** contains any of those changes, for
   example one written while the workflow had no live deals, or one updated by a merge.
 - In ZiplineOS, setting the workflow back to Draft while it has live deals.

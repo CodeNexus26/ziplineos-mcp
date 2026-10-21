@@ -23,7 +23,7 @@ The user must complete the ZiplineOS sign-in and consent themselves. Microsoft C
 - [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md): draft, merge, resolve conflicts with the human, finalise
 - [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md): keys, types, order, visibility, configJson, PATCH edits
 - [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md): Australian mortgage fact-find shapes
-- [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md): build, test, validate and publish a Logic calculation engine
+- [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md): build, test (`test_engine`, `test_integration`), validate, publish and delete a Logic calculation engine
 - [Agent instructions (paste-in)](microsoft/agent-instructions.md): condensed rules for Copilot, ChatGPT and other assistants
 
 ## Optional

@@ -10,8 +10,9 @@ order, and returns **outputs**. Workflow integrations, Protocol nodes, quote est
 engine's API/webhook can all run it.
 
 The engine tools only work on **Custom** engines. Built-in engine types are refused. The
-connector can't delete an engine, roll back a version, set up its API/webhook access, or import
-one. A person does those in ZiplineOS.
+connector can delete an engine that was never published and isn't used anywhere (`delete_engine`,
+ask first). It can't roll back a version, set up an engine's API/webhook access, or import one. A
+person does those in ZiplineOS.
 
 ## Before you start
 
@@ -58,8 +59,9 @@ Agree in plain language, before any write:
      step. It has `+ - * /`, brackets and the listed functions (`if`, `min`, `max`, `round`,
      `amortize`, …) only. There are no comparison operators: use `if(x, a, b)`, where a non-zero
      `x` means true.
-   - Every value in table rows and switch cases is a JSON **string**. Switch case keys are
-     case-sensitive; table cells aren't.
+   - Every value in table rows and switch cases is a JSON **string**. Switch case keys and
+     table cells both match ignoring case. Switch keys that differ only by case are refused at
+     publish.
    - Conditions use `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `in`, `contains`, not symbols like `>`.
    - A list can't contain `null` entries (expressions, table columns, rows or outputs,
      conditional branches); they are refused.
@@ -71,7 +73,8 @@ Agree in plain language, before any write:
 5. Change things with `update_engine` (name, description), `update_computation` and
    `update_output`: only what you pass changes, but a new `configurationJson` **replaces the whole
    configuration**. Fix order with `reorder_computations` / `reorder_outputs`, passing **every**
-   id exactly once. `delete_computation` / `delete_output` remove one; ask first.
+   id exactly once. `delete_computation` / `delete_output` remove one and renumber the rest; ask
+   first.
 6. `set_output_schema` is optional and needs the user's explicit yes. When set, its JSON template
    (placeholders like `{{monthly}}`) **replaces the engine's response for every caller** and the
    outputs list is ignored. An empty value clears it.
@@ -86,6 +89,12 @@ for example `{"loan":500000,"years":30}`.
 - Keys ending in `_error`, also listed in `errors`, are evaluation problems. Fix them.
 - Missing or misspelt input keys, and non-numeric values, quietly count as 0. A suspicious 0
   usually means a typo.
+- To check an Integration item that uses the engine, use `test_integration(workflowTemplateId,
+  itemId, answers)`. It runs the version the item really runs (its `pinnedVersion`, else the
+  latest published) with its field mappings, on sample answers. No deal is involved and nothing is
+  saved. A never-published engine is refused, so publish first (ask first).
+- An Integration item's `resultsDisplay` with the `default` preset lists deal field names. On an
+  engine item each must be one of the engine's visible outputs.
 
 ## 4. Validate
 
@@ -105,6 +114,9 @@ switches to it immediately**, except integrations pinned to an older version.
   straight away. Wait for an explicit yes.
 - `changeNotes` is required. Write one plain sentence about what changed; it appears in the
   version history.
+- A new engine's first publish is version 1.
+- Renaming an engine or editing its description marks it as having unpublished changes. Publish
+  to clear them.
 - Publishing is refused while `validate_engine` reports any issue.
 - `get_engine_versions` lists the published versions, newest first, with their notes. To go back
   to an earlier version, the user rolls back in ZiplineOS.

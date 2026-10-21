@@ -15,10 +15,12 @@ create_form_with_fields
 create_workflow
 delete_computation
 delete_draft
+delete_engine
 delete_field
 delete_item
 delete_output
 delete_step
+delete_workflow
 discard_form_changes
 discard_release_candidate
 finalize_merge
@@ -54,6 +56,7 @@ set_parameters
 set_step_rules
 switch_editor_context
 test_engine
+test_integration
 unarchive_form
 update_computation
 update_engine

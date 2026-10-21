@@ -92,6 +92,19 @@ step** and a default **Primary Applicant** role.
     `undeclaredParameterKeys` / `undeclaredInputKeys`. A typed `integration` patch keeps all of
     them even when you send `parameters` / `inputValues`; drop one only with `removeParameterKeys`
     / `removeInputKeys`, and only when the user asks.
+- `resultsDisplay` (Integration items): `{preset, fieldNames?}` picks the result card staff and the
+  client see. `default` shows label/value rows and needs `fieldNames` (deal custom-field keys; on a
+  calc-engine item each must be one of the engine's visible outputs). `quote-estimate` and
+  `repayment-savings` take no `fieldNames` and read fixed keys listed in the tool description (on a
+  calc-engine item those keys must be engine outputs). Other presets aren't supported.
+  `update_item` with `clearResultsDisplay: true` removes it.
+- `assignedRoleId`: a team role (a `memberTypeId` from `teamRoles` in `list_workflow_roles`) saying
+  who the item is for. It filters team views. An item has an applicant role or a team role, not
+  both. `update_item` with `clearAssignedRole: true` removes it.
+- To check a calc-engine Integration item, use `test_integration(workflowTemplateId, itemId,
+  answers)`. Each answer is `{formTemplateId, fieldKey, value}` for a field the item maps (see
+  `get_item` `fieldMappings`). It runs once, with no deal, and saves nothing. Paid providers never
+  run, and other providers are refused.
 - Action and Integration items only run on their own once they have an execution trigger
   (`executionTrigger`: `onStepEnter`, `onStepExit`, `onStepView` or `onItemView`) and, optionally,
   a `delay`. The connector sets these **only on a Draft workflow with no live deals**. On a live
@@ -115,10 +128,16 @@ step** and a default **Primary Applicant** role.
 
 ## Errors you may see
 
+Refusals say why (the validation reason, the allowed values, "must list every item exactly once").
+Read the message and fix the call. Don't retry it unchanged.
+
 - *"Workflow '…' is Published with no draft loaded"*: you're trying to change a live workflow.
   Stop and follow the `edit-a-published-workflow` skill.
 - *"Item was not created … any linked form is published"*: publish the form first, or check the
   ids.
+- To remove a workflow you created by mistake, use `delete_workflow(workflowTemplateId)`. It only
+  works on a Draft workflow with no deals at all (test deals count). Ask the user first. Published
+  or used workflows are refused: the user deletes those in ZiplineOS.
 - *"Item type '…' is not supported yet"*: only the five types above are available.
 - *"Can't … while a draft is loaded: this workflow is published and has live deals …"*: the
   live-deal guard. Don't retry; follow "When an edit is refused because of live deals" in the
