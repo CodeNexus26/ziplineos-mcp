@@ -12,7 +12,9 @@ through it. Follow these steps in order. Don't invent settings that aren't in th
   for them.** Never ask for their password, and never type credentials for them.
 - Tools only cover authoring workflows, forms and (where the organisation has it switched on)
   Logic calculation engines in the user's own organisation. `test_integration` runs a calculation
-  integration on sample answers and saves nothing.
+  integration on sample answers and saves nothing. For Owners and Admins, the org settings tools
+  (`get_branding`, `update_branding`, the document AI settings and category tools) change the
+  organisation's branding and AI document settings.
 
 ## 1. Work out the client
 
@@ -64,7 +66,8 @@ Read the skills before you change anything. The rules that matter most:
 - `update_field`, `update_step` and `update_item` change only what you pass. Never re-send
   unchanged attributes.
 - Ask before publishing a form that is in use, publishing a calculation engine, archiving,
-  deleting (`delete_workflow`, `delete_engine`), discarding, or resolving and finalising a merge.
+  deleting (`delete_workflow`, `delete_engine`, `delete_document_category`), changing branding or
+  AI document settings, discarding, or resolving and finalising a merge.
 - Published workflows are changed only through `create_draft` → `switch_editor_context` → edit →
   `merge_draft_into_rc` → (resolve with the user) → `finalize_merge`. Publishing a workflow is
   done by a person in ZiplineOS.

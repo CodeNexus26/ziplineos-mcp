@@ -18,7 +18,9 @@ An AI assistant that supports MCP can sign in **as you** and use ZiplineOS tools
   sample answers, and delete a Draft workflow that has no deals;
 - change a live workflow safely through a draft, merging the changes into the next version, with
   you confirming any conflicts;
-- where your organisation has it switched on, build, test and publish Logic calculation engines.
+- where your organisation has it switched on, build, test and publish Logic calculation engines;
+- if you are an Owner or Admin, set your brand colour and logos and tune AI document settings
+  (confidence thresholds, document categories and naming formats).
 
 It **can't** publish a workflow to live deals; you do that in ZiplineOS. It can publish a
 calculation engine, but only after you say yes. It can only see and change what
@@ -61,6 +63,7 @@ stop and ask you before anything goes live.
 | [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md) | Keys, types, ordering, show/hide rules, money fields, safe edits |
 | [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md) | Common shapes for Australian mortgage fact finds |
 | [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md) | Building, testing and publishing a Logic calculation engine |
+| [set-up-branding-and-documents](plugins/ziplineos/skills/set-up-branding-and-documents/SKILL.md) | Brand colour and logos, and AI document settings and categories (Owner or Admin) |
 
 Each client guide explains how to load them. For Microsoft Copilot and ChatGPT, paste
 [microsoft/agent-instructions.md](microsoft/agent-instructions.md) into the agent's instructions.

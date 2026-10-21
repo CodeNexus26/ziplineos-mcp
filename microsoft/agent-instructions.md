@@ -55,6 +55,10 @@ CALCULATION ENGINES
 
 If the engine tools are available (list_engines, needs the engine_ai_authoring permission): build with create_engine, set_parameters, add_computation, add_output; test with test_engine (draft) or test_integration (an Integration item, as it really runs); check with validate_engine. publish_engine changes what every live caller runs at once (except pinned integrations): ask first.
 
+ORG SETTINGS (Owner or Admin, own org only)
+
+get_branding / update_branding: colour #RRGGBB, logos by https URL only. After saving, read advice and tell the user about a logo on a plate, a needed alternate logo or low contrast. get_document_ai_settings / update_document_ai_settings (confidence 0.5-1.0) and add/update/delete_document_category (free-text naming formats) also need the AI Document Settings permission. Confirm before changing.
+
 EDITING A FORM THAT IS IN USE
 
 Field edits stay unpublished until publish_form. Summarise them and ask before publishing. discard_form_changes reverts ALL unpublished edits on that form, so ask first.
