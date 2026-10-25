@@ -21,5 +21,5 @@ Try these once ZiplineOS is connected. They match the "Try this first" suggestio
 
 - *Build a new "Refinance" workflow: enquiry, fact find, documents, lodged, approved, settled
   (won), not proceeding (lost). Reuse my existing fact-find forms. Show me the plan first.*
-- *In the live Home Loan workflow, add a "Valuation" stage after "Lodged". Use a draft and walk
-  me through any conflicts.*
+- *In the live Home Loan workflow, add a "Valuation" stage after "Lodged" in the Release
+  Candidate. Show me the change so I can test it on a test deal before I publish.*

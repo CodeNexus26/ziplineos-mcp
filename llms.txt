@@ -20,10 +20,10 @@ The user must complete the ZiplineOS sign-in and consent themselves. Microsoft C
 ## Skills (how to use the tools well)
 
 - [build-a-workflow](plugins/ziplineos/skills/build-a-workflow/SKILL.md): build a new workflow, with forms first
-- [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md): draft, merge, resolve conflicts with the human, finalise
+- [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md): edit the Release Candidate directly, hand over for publishing in ZiplineOS, edit forms in use
 - [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md): keys, types, order, visibility, configJson, PATCH edits
 - [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md): Australian mortgage fact-find shapes
-- [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md): build, test (`test_engine`, `test_integration`), validate, publish and delete a Logic calculation engine
+- [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md): build, test (`test_engine`, `test_integration`), validate and delete a Logic calculation engine (publishing is done in ZiplineOS)
 - [set-up-branding-and-documents](plugins/ziplineos/skills/set-up-branding-and-documents/SKILL.md): set brand colour and logos, read logo advice, change AI document confidence and document categories (Owner or Admin)
 - [Agent instructions (paste-in)](microsoft/agent-instructions.md): condensed rules for Copilot, ChatGPT and other assistants
 

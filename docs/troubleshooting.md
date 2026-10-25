@@ -22,10 +22,15 @@ AI clients cache the tool list from when you connected. After a ZiplineOS update
 - **Claude Code:** `/mcp` → reconnect, or restart Claude Code.
 - **Copilot Studio:** refresh the MCP tool in the agent's **Tools**.
 
-## "Workflow '…' is Published with no draft loaded"
+## "Workflow '…' has a draft loaded in its editor"
 
-Working as intended. Live workflows are only changed through a draft. Ask the assistant to "open
-a draft and make the change there". The `edit-a-published-workflow` skill covers the steps.
+Working as intended. The assistant edits only a workflow's Release Candidate, never a draft.
+Someone has a draft open in the ZiplineOS workflow editor. Switch the editor back to the Release
+Candidate in ZiplineOS (check nobody is mid-way through that draft), then ask again.
+
+## "Workflow '…' is Archived"
+
+Unarchive the workflow in ZiplineOS before asking the assistant to edit it.
 
 ## "Item was not created … any linked form is published"
 
@@ -38,9 +43,12 @@ parameter (for example `required` or `helpText`). The error names the key.
 
 ## A change isn't showing on live deals
 
-- Form edits stay unpublished until the form is **published**.
-- Workflow changes merged into the Release Candidate go live only when someone **publishes the
-  workflow in ZiplineOS**. The assistant can't do this.
+- Form edits stay unpublished until the form is **published**. A published form change reaches
+  test and preview deals at once, and live deals once the workflow is published in ZiplineOS.
+- Workflow changes land in the Release Candidate, which only test and preview deals run. They go
+  live only when someone **publishes the workflow in ZiplineOS**. The assistant can't do this.
+- Calculation engine changes go live only when someone publishes the engine in the ZiplineOS
+  Logic portal. The assistant can't do this either.
 
 ## The assistant can't see a workflow, stage or form
 

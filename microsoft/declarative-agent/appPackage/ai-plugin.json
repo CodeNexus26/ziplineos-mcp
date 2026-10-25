@@ -3,7 +3,7 @@
   "schema_version": "v2.4",
   "name_for_human": "ZiplineOS",
   "description_for_human": "Build and edit ZiplineOS workflows and forms.",
-  "description_for_model": "ZiplineOS workflow and form authoring tools for an Australian mortgage brokerage: find workflows, forms and questions by name; add and edit questions and show/hide rules; add stages and items; change published workflows through drafts and merges. Ask the user before publishing, archiving, deleting or resolving merge conflicts.",
+  "description_for_model": "ZiplineOS workflow and form authoring tools for an Australian mortgage brokerage: find workflows, forms and questions by name; add and edit questions and show/hide rules; add stages and items; change a published workflow's Release Candidate, which goes live when the user publishes it in ZiplineOS. Ask the user before publishing a form, archiving or deleting.",
   "runtimes": [
     {
       "type": "RemoteMCPServer",
