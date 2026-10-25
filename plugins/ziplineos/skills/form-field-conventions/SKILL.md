@@ -153,8 +153,9 @@ Notes:
 
 ## Publishing a form
 
-- Field edits stay unpublished until `publish_form`. **Publishing changes what live deals using
-  that form see.** Always ask the user before publishing a form that is already in use. Say which
+- Field edits stay unpublished until `publish_form`. **Publishing makes the changes visible to
+  test and preview deals at once**, and to live deals once each workflow using the form is
+  published in ZiplineOS. Always ask the user before publishing a form that is already in use. Say which
   form, summarise the changes, and wait for a clear yes.
 - A new form must be published once before it can be linked to a workflow item.
 - Never publish as a side effect of an edit the user didn't ask to go live.

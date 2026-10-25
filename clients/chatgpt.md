@@ -14,7 +14,7 @@ workspace admin may need to allow developer mode or custom apps first.
 1. In ChatGPT, open **Settings → Apps & Connectors → Advanced** and turn on **Developer mode**.
 2. Choose **Create** and enter:
    - Name: `ZiplineOS`
-   - Description: `Build and edit ZiplineOS workflows and forms: find workflows, forms and questions by name; add and edit questions and show/hide rules; add stages and items; change live workflows safely through drafts.`
+   - Description: `Build and edit ZiplineOS workflows and forms: find workflows, forms and questions by name; add and edit questions and show/hide rules; add stages and items; change a published workflow's next version (Release Candidate) for publishing in ZiplineOS.`
    - URL: `https://api.ziplineos.com.au/api/v1/mcp`
    - Authentication: **OAuth**
 3. Choose **Create**, sign in to ZiplineOS, check the organisation on the consent screen, and

@@ -6,6 +6,26 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 ### Changed
 
+- Release-Candidate-only editing (merge only after the matching ZiplineOS release is deployed to
+  production).
+  - Workflow-structure tools now edit only a workflow's Release Candidate, on a Draft or Published
+    workflow. Since ZiplineOS publish gating, the Release Candidate reaches only test and preview
+    deals; live deals run their published version until someone publishes the workflow in
+    ZiplineOS.
+  - Removed tools: `create_draft`, `list_drafts`, `get_draft`, `rename_draft`, `delete_draft`,
+    `switch_editor_context`, `merge_draft_into_rc`, `get_merge_conflicts`,
+    `apply_conflict_resolutions`, `finalize_merge`, `discard_release_candidate` and
+    `publish_engine`. Drafts, merging and publishing a workflow or a calculation engine are done in
+    ZiplineOS.
+  - New refusals: "Workflow '…' has a draft loaded in its editor" (switch the editor back to the
+    Release Candidate in ZiplineOS) and "Workflow '…' is Archived". The old "Published with no
+    draft loaded" error, the live-deal guard and the "Draft workflow with no live deals" limit on
+    triggers and delays are gone. Test and preview deals still run triggers.
+  - `publish_form` makes form changes visible to test and preview deals at once; live deals get
+    them when the workflow is next published in ZiplineOS.
+  - Rewrote `edit-a-published-workflow`; updated `build-a-workflow`, `build-a-calculation-engine`,
+    `form-field-conventions`, the paste-in instructions, `AGENTS.md`, README, `llms.txt`, client
+    descriptions, troubleshooting and `scripts/known-tools.txt`.
 - Org settings tools (ziplineos#3813). Needs the ZiplineOS release that includes it.
   - New tools: `get_branding`, `update_branding`, `get_document_ai_settings`,
     `update_document_ai_settings`, `add_document_category`, `update_document_category` and

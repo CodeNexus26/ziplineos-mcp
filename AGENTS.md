@@ -65,11 +65,12 @@ Read the skills before you change anything. The rules that matter most:
 - Resolve workflows and forms **by name**. Never ask the user for ids.
 - `update_field`, `update_step` and `update_item` change only what you pass. Never re-send
   unchanged attributes.
-- Ask before publishing a form that is in use, publishing a calculation engine, archiving,
-  deleting (`delete_workflow`, `delete_engine`, `delete_document_category`), changing branding or
-  AI document settings, discarding, or resolving and finalising a merge.
-- Published workflows are changed only through `create_draft` → `switch_editor_context` → edit →
-  `merge_draft_into_rc` → (resolve with the user) → `finalize_merge`. Publishing a workflow is
-  done by a person in ZiplineOS.
-- If an edit is refused because a draft is loaded on a workflow with live deals, don't retry or
-  work around it. Explain it to the user (see the `edit-a-published-workflow` skill).
+- Ask before publishing a form that is in use, archiving, deleting (`delete_workflow`,
+  `delete_engine`, `delete_document_category`), changing branding or AI document settings, or
+  discarding.
+- Workflow-structure tools edit only the workflow's Release Candidate, which test and preview
+  deals run. Live deals get it once a person publishes the workflow in ZiplineOS. Publishing a
+  workflow or a calculation engine is done in ZiplineOS only.
+- If a tool says the workflow "has a draft loaded in its editor", don't retry or work around it.
+  Ask the user to switch the editor back to the Release Candidate in ZiplineOS (see the
+  `edit-a-published-workflow` skill).

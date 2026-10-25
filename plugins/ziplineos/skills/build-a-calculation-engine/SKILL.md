@@ -1,6 +1,6 @@
 ---
 name: build-a-calculation-engine
-description: Build, test, validate and publish a ZiplineOS Logic calculation engine (Custom type) with the ZiplineOS MCP engine tools — inputs, computation steps (Formula, Table, Switch, Conditional), outputs and the optional response template. Use when a user asks to create, change, test or publish a calculator, calculation engine, serviceability or repayment calculation, stamp-duty table or similar in ZiplineOS Logic.
+description: Build, test and validate a ZiplineOS Logic calculation engine (Custom type) with the ZiplineOS MCP engine tools — inputs, computation steps (Formula, Table, Switch, Conditional), outputs and the optional response template — then hand it over for publishing in the ZiplineOS Logic portal. Use when a user asks to create, change or test a calculator, calculation engine, serviceability or repayment calculation, stamp-duty table or similar in ZiplineOS Logic.
 ---
 
 # Build a ZiplineOS calculation engine
@@ -22,14 +22,15 @@ person does those in ZiplineOS.
 - **Never ask for ids.** `list_engines` lists the organisation's Custom engines (id, name,
   version, whether there are unpublished changes). Match by name; if several match, ask which.
 - **Draft vs published.** Every edit changes the engine's **draft**. Once an engine has been
-  published, everything that runs it uses the latest **published version** until you publish
-  again. Two exceptions to tell the user about:
+  published, everything that runs it uses the latest **published version** until someone
+  publishes again in the ZiplineOS Logic portal. The connector can't publish an engine. Exceptions
+  to tell the user about:
   - An engine that has **never been published** runs straight from its draft, so edits reach
     anything already using it at once.
   - A workflow integration can be **pinned** to one version (`pinnedVersion`). It keeps running
-    that version after you publish.
+    that version after a new version is published.
   - Quoting collections that use the engine to enrich applicant data currently read its draft
-    steps directly, so draft edits can show up in quotes before you publish.
+    steps directly, so draft edits can show up in quotes before the engine is published.
 - **A person may be editing too.** `get_engine` always reads the current draft. Call it before
   you change anything, and again after someone else may have edited. The last write to a step or
   output wins.
@@ -92,7 +93,7 @@ for example `{"loan":500000,"years":30}`.
 - To check an Integration item that uses the engine, use `test_integration(workflowTemplateId,
   itemId, answers)`. It runs the version the item really runs (its `pinnedVersion`, else the
   latest published) with its field mappings, on sample answers. No deal is involved and nothing is
-  saved. A never-published engine is refused, so publish first (ask first).
+  saved. A never-published engine is refused: the user publishes it in the Logic portal first.
 - An Integration item's `resultsDisplay` with the `default` preset lists deal field names. On an
   engine item each must be one of the engine's visible outputs.
 
@@ -104,28 +105,25 @@ engine is ready. Issue codes: `NO_COMPUTATIONS`, `DUPLICATE_KEY`, `UNKNOWN_OUTPU
 a value set in only one branch of a conditional), `INVALID_CONFIG` and `UNRESOLVED_TEMPLATE_VAR`.
 Fix each issue, re-test, and validate again until the list is empty.
 
-## 5. Publish (ask first)
+## 5. Hand over for publishing
 
-`publish_engine(engineId, changeNotes)` makes the draft the new live version. **Everything that
-runs this engine (workflow integrations, Protocol nodes, quote estimates, API/webhook callers)
-switches to it immediately**, except integrations pinned to an older version.
+**The connector can't publish an engine.** Publishing is done by a person in the ZiplineOS Logic
+portal, because it takes effect at once: everything that runs the engine (workflow integrations,
+Protocol nodes, quote estimates, API/webhook callers) switches to the new version straight away,
+except integrations pinned to an older version.
 
-- Before publishing, tell the user what changed, the test results, and that live use switches
-  straight away. Wait for an explicit yes.
-- `changeNotes` is required. Write one plain sentence about what changed; it appears in the
-  version history.
-- A new engine's first publish is version 1.
-- Renaming an engine or editing its description marks it as having unpublished changes. Publish
-  to clear them.
-- Publishing is refused while `validate_engine` reports any issue.
+- Tell the user what changed, the test results, and that `validate_engine` reports no issues.
+  Remind them that live use switches as soon as they publish in the Logic portal.
+- Publishing is refused there while validation reports any issue.
+- Renaming an engine or editing its description marks it as having unpublished changes.
+  Publishing it in ZiplineOS clears them.
 - `get_engine_versions` lists the published versions, newest first, with their notes. To go back
   to an earlier version, the user rolls back in ZiplineOS.
 
 ## Don't
 
-- Don't publish without an explicit yes, and don't publish to "see if it works". Use
-  `test_engine`.
-- Don't tell the user a change is live until `publish_engine` has succeeded, unless the engine has
-  never been published (then the draft is what runs).
+- Don't suggest publishing to "see if it works". Use `test_engine`.
+- Don't tell the user a change is live until someone has published the engine in the Logic
+  portal, unless the engine has never been published (then the draft is what runs).
 - Don't guess formulas, rates or table values. Build only from what the user gives you, and ask
   when something is missing.

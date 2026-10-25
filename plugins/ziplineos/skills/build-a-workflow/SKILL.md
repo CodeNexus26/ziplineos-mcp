@@ -107,15 +107,12 @@ step** and a default **Primary Applicant** role.
   run, and other providers are refused.
 - Action and Integration items only run on their own once they have an execution trigger
   (`executionTrigger`: `onStepEnter`, `onStepExit`, `onStepView` or `onItemView`) and, optionally,
-  a `delay`. The connector sets these **only on a Draft workflow with no live deals**. On a live
-  workflow, tell the user to set the trigger in ZiplineOS (where it is also locked while a draft is
-  loaded and live deals run on the workflow; see `edit-a-published-workflow`). Confirm with the user before adding a
-  trigger: test deals still receive it, `onStepView` / `onItemView` fire on every view (the connector
-  refuses them on integrations and email/SMS actions), and an Equifax run is a paid enquiry. On a
-  live workflow it also refuses rule, config or cross-step moves on an item that already has a
-  trigger. Switching a trigger to manual (optionally clearing its delay) is always allowed, but runs
-  already scheduled still go ahead. Clearing only the delay of an item that still has a trigger
-  makes it run immediately, so it's treated like any other trigger change.
+  a `delay`. Confirm with the user before adding a trigger: the connector edits the Release
+  Candidate, and test and preview deals **do** run triggers, so a trigger fires on those deals
+  straight away. `onStepView` / `onItemView` fire on every view (the connector refuses them on
+  integrations and email/SMS actions), and an Equifax run is a paid enquiry. A delay applies only
+  to deals that enter the step after it is set. Switching a trigger to manual removes any delay,
+  but clearing a trigger or delay doesn't cancel runs already scheduled: they still go ahead.
 
 ## 5. Verify and hand over
 
@@ -131,14 +128,13 @@ step** and a default **Primary Applicant** role.
 Refusals say why (the validation reason, the allowed values, "must list every item exactly once").
 Read the message and fix the call. Don't retry it unchanged.
 
-- *"Workflow '…' is Published with no draft loaded"*: you're trying to change a live workflow.
-  Stop and follow the `edit-a-published-workflow` skill.
+- *"Workflow '…' has a draft loaded in its editor"*: someone has a draft open in the ZiplineOS
+  workflow editor. The connector edits only the Release Candidate. Don't retry; ask the user to
+  switch the editor back to the Release Candidate in ZiplineOS (see `edit-a-published-workflow`).
+- *"Workflow '…' is Archived"*: unarchive it in ZiplineOS before editing.
 - *"Item was not created … any linked form is published"*: publish the form first, or check the
   ids.
 - To remove a workflow you created by mistake, use `delete_workflow(workflowTemplateId)`. It only
   works on a Draft workflow with no deals at all (test deals count). Ask the user first. Published
   or used workflows are refused: the user deletes those in ZiplineOS.
 - *"Item type '…' is not supported yet"*: only the five types above are available.
-- *"Can't … while a draft is loaded: this workflow is published and has live deals …"*: the
-  live-deal guard. Don't retry; follow "When an edit is refused because of live deals" in the
-  `edit-a-published-workflow` skill.
