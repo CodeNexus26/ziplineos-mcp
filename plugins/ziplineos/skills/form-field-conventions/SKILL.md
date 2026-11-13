@@ -71,6 +71,11 @@ behave; when a tool's error message disagrees with this guide, believe the error
   - `action`: `show` or `hide`. `logic`: `AND` (default) or `OR`.
   - `operator`: `equals`, `notEquals`, `contains`, `notContains`, `greaterThan`, `lessThan`,
     `greaterOrEqual`, `lessOrEqual`, `isEmpty`, `isNotEmpty`.
+  - `notEquals` and `notContains` are **true when the question has no answer**. "Show B when A
+    does not equal 'no'" shows B while A is still blank. Add an `isNotEmpty` condition on A (with
+    `AND`) if B should wait for an answer.
+  - `equals` and `notEquals` compare two numbers as numbers (`"500000"` equals `"500000.00"`).
+  - While a rule hides a workflow item or step, its answers count as no answer to every rule.
   - `fieldKey` refers to a field **on the same form**. Use the option `value`, not its label.
 - Relative-date conditions (`isEarlierThan`, `isLaterThan`, `isOnOrBefore`, `isOnOrAfter`) and
   rules that reference another form are **not** supported by `visibility`. They need raw `rules`

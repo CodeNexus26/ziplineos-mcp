@@ -6,6 +6,28 @@ All notable changes to this repository are recorded here. Dates are in AEST/AEDT
 
 ### Changed
 
+- Synced with the ZiplineOS server as of 14 Nov 2026 (ziplineos#3977, #4000, #4113, #4212, #4332,
+  #4362, #4369). Needs the ZiplineOS release that includes them.
+  - Modules: a `Subject` item is now a **module**, a named group of forms on one step that people
+    switch on or off for each deal in ZiplineOS (create-deal wizard, or the deal's workflow view).
+    `subject.defaultIncluded: false` makes new deals start with it off. Switching on offers the new
+    `moduleAdded` email; switching off clears the module's answers and is refused once the module
+    is complete. The connector can't switch a module for a deal. The "Workflow Item: Subject"
+    permission is now on by default. New skill `build-a-module`.
+  - New skill `choose-scope-and-entries`: `scope` Shared or PerApplicant, `applicableRoles`,
+    `minInstances` / `maxInstances`, and repeating groups.
+  - New skill `tag-questions-for-the-form-filler` and documented tools `list_question_tags`,
+    `set_question_tags`, `delete_question_tag`, `list_data_points` and `get_profile_coverage`.
+  - Documented tools `add_applicant_role`, `update_applicant_role`, `delete_applicant_role`,
+    `get_workflow_emails` and `update_workflow_email` (five emails, including `moduleAdded`; not
+    versioned, so a change reaches every deal's next send at once).
+  - Documented `get_guide` (the server's own guides) and `report_capability_gap`.
+  - Rules: `notEquals` / `notContains` are true when there is no answer; `equals` / `notEquals`
+    compare two numbers as numbers; a hidden item's or step's answers read as no answer.
+  - `edit-a-published-workflow` lists what skips the Release Candidate: workflow emails, and forms,
+    roles and item ownership on a never-published workflow.
+  - The SuperAdmin-only deal tools (`create_deal`, `get_deal`, `list_deals`, `list_team_members`)
+    are hidden from other accounts and stay undocumented.
 - Release-Candidate-only editing (merge only after the matching ZiplineOS release is deployed to
   production).
   - Workflow-structure tools now edit only a workflow's Release Candidate, on a Draft or Published
