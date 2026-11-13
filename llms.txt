@@ -21,6 +21,9 @@ The user must complete the ZiplineOS sign-in and consent themselves. Microsoft C
 
 - [build-a-workflow](plugins/ziplineos/skills/build-a-workflow/SKILL.md): build a new workflow, with forms first
 - [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md): edit the Release Candidate directly, hand over for publishing in ZiplineOS, edit forms in use
+- [choose-scope-and-entries](plugins/ziplineos/skills/choose-scope-and-entries/SKILL.md): Shared or PerApplicant, single or multiple entries, repeating groups
+- [build-a-module](plugins/ziplineos/skills/build-a-module/SKILL.md): modules (Subject items), optional groups of forms switched on or off per deal; defaultIncluded and the moduleAdded email
+- [tag-questions-for-the-form-filler](plugins/ziplineos/skills/tag-questions-for-the-form-filler/SKILL.md): tag questions with data points so the Chrome extension fills Platform Plus and other websites
 - [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md): keys, types, order, visibility, configJson, PATCH edits
 - [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md): Australian mortgage fact-find shapes
 - [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md): build, test (`test_engine`, `test_integration`), validate and delete a Logic calculation engine (publishing is done in ZiplineOS)

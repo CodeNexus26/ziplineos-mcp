@@ -1,6 +1,7 @@
 # Tool names exposed by the ZiplineOS MCP server, as referenced by the docs and skills.
 # Keep in sync with the server. The drift check (scripts/check_drift.py) compares this list
 # with a live tools/list call.
+add_applicant_role
 add_computation
 add_document_category
 add_field
@@ -12,12 +13,14 @@ create_engine
 create_form
 create_form_with_fields
 create_workflow
+delete_applicant_role
 delete_computation
 delete_document_category
 delete_engine
 delete_field
 delete_item
 delete_output
+delete_question_tag
 delete_step
 delete_workflow
 discard_form_changes
@@ -26,12 +29,17 @@ get_document_ai_settings
 get_engine
 get_engine_versions
 get_form
+get_guide
 get_item
+get_profile_coverage
 get_step
 get_workflow
+get_workflow_emails
+list_data_points
 list_engines
 list_forms
 list_integration_providers
+list_question_tags
 list_workflow_documents
 list_workflow_fields
 list_workflow_roles
@@ -42,14 +50,17 @@ reorder_computations
 reorder_items
 reorder_outputs
 reorder_steps
+report_capability_gap
 search_fields
 set_item_rules
 set_output_schema
 set_parameters
+set_question_tags
 set_step_rules
 test_engine
 test_integration
 unarchive_form
+update_applicant_role
 update_branding
 update_computation
 update_document_ai_settings
@@ -60,4 +71,5 @@ update_item
 update_output
 update_step
 update_workflow
+update_workflow_email
 validate_engine

@@ -1,6 +1,6 @@
 ---
 name: build-a-workflow
-description: End-to-end recipe for building a NEW ZiplineOS workflow (stages, forms, checklists, documents) with the ZiplineOS MCP tools, in the right order — forms first, publish them, then the workflow, steps and items. Use when a user asks to create, set up or scaffold a new workflow, pipeline, process or fact find in ZiplineOS, or to add steps or items to a workflow that is still in Draft.
+description: End-to-end recipe for building a NEW ZiplineOS workflow (stages, applicant roles, forms, checklists, documents, modules) with the ZiplineOS MCP tools, in the right order — forms first, publish them, then the workflow, roles, steps and items. Use when a user asks to create, set up or scaffold a new workflow, pipeline, process or fact find in ZiplineOS, or to add steps or items to a workflow that is still in Draft.
 ---
 
 # Build a new ZiplineOS workflow
@@ -9,7 +9,8 @@ A **workflow** is the process a deal moves through. It has ordered **steps** (st
 step holds **items**: forms the client or broker fills in, checklists, documents and
 automations. Forms are separate objects that items link to.
 
-Read the `form-field-conventions` skill before adding fields.
+Read the `form-field-conventions` skill before adding fields. If the connector offers `get_guide`,
+call it with no name to see the server's own guides; they always match the current tools.
 
 ## 0. Plan with the user first
 
@@ -46,6 +47,21 @@ step** and a default **Primary Applicant** role.
   instead of leaving an empty extra step at the top.
 - Only pass `icon` if you know the name is valid in ZiplineOS (e.g. `Home`); otherwise omit it.
 
+## 2a. Set up the applicant roles
+
+Add the roles the deal needs (Co-Applicant, Guarantor, ...) with `add_applicant_role`, and adjust
+the default one with `update_applicant_role` (a PATCH). Do this before adding items, which name
+roles. `list_workflow_roles` shows them.
+
+- The first role is the primary role and holds one person only.
+- `minCount` is how many people the role needs on a deal; `maxCount` is the most it can hold
+  (omit for no limit; `clearMaxCount: true` removes one).
+- `sharedSectionAccess` (`Hidden`, `View`, `Edit`) and `otherApplicantsSectionAccess` (`Hidden`,
+  `View`) set what people in the role see in Collect. The primary applicant can always edit shared
+  sections and add people.
+- `delete_applicant_role` is refused while a Form item is filled by the role or an item still
+  emails or texts it. Ask the user before deleting.
+
 ## 3. Add the steps
 
 `add_step(workflowTemplateId, name, description?, color?, isTerminal, stageType)`
@@ -63,12 +79,22 @@ step** and a default **Primary Applicant** role.
 
 | type | Required | Notes |
 |---|---|---|
-| `Form` | `formTemplateId` of a **published** form | `applicantRoleId` is optional; get ids from `list_workflow_roles`. |
+| `Form` | `formTemplateId` of a **published** form | `applicantRoleId` is optional; get ids from `list_workflow_roles`. Set `scope` and entries (below). |
 | `Checklist` | `checklistJson` | Array of `{"id":"…","text":"…","sortOrder":0,"children":[…]}`. Use short unique string ids. |
 | `LiveDocument` | `workflowDocumentId` | Pick from `list_workflow_documents`. The connector can't upload documents; if the PDF isn't there, ask the user to upload it in ZiplineOS. Optional `autoFinalizeOnStepExit`. |
 | `Integration` | `integration` (typed) | Pick `extensionSlug` from `list_integration_providers` (only installed providers work). Map inputs with `fieldMappings` to forms on this workflow. **Webhooks aren't supported.** An Equifax run is a paid credit enquiry, so confirm with the user before adding one. |
+| `Subject` (a **module**) | `subject` (typed) | A named group of Form items on the same step that can be switched on or off per deal. Read the `build-a-module` skill first. |
 | `Action` | `action` (typed) | `type` is `sendEmail`, `sendSms`, `addNote` or `cancelScheduledItems`. Recipients are `{kind, id}` with kind `applicantRole` or `teamRole`, from `list_workflow_roles` (a team role's id is its `memberTypeId`). Extra email addresses go in `cc`/`bcc`; SMS can take a custom phone number (`{kind:"custom", address}`). Only build from details the user gives you. `get_item` never shows stored custom addresses: a custom recipient comes back as `addressWithheld: true` with a `withheldRef` (`custom:1`), and stored cc/bcc addresses come back as refs (`cc:1`, `bcc:1`) with `ccWithheldCount` / `bccWithheldCount`. |
 
+- **Who fills it and how many entries.** For Form, Checklist and LiveDocument items set `scope`:
+  `Shared` (once for the deal) or `PerApplicant` (once per applicant; `applicableRoles` limits it
+  to some roles). For Form and Checklist items set `minInstances` / `maxInstances` (`maxInstances`
+  0 = no limit, e.g. one entry per property). When it isn't obvious, read the
+  `choose-scope-and-entries` skill and ask the user.
+- **Optional groups of forms.** When some deals need a set of forms and others don't, or the
+  client gets them later, build a **module** (`Subject` item) instead of show/hide rules. New
+  deals start with it on or off (`defaultIncluded`), and the advisor switches it per deal in
+  ZiplineOS. See `build-a-module`.
 - Items are appended to the step. Fix order with `reorder_items` (the **full** list of the step's
   item ids) or `move_item` (zero-based `targetIndex`, can move between steps).
 - `update_item` changes only the attributes you pass (null = unchanged): name, `isRequired`,
@@ -114,7 +140,15 @@ step** and a default **Primary Applicant** role.
   to deals that enter the step after it is set. Switching a trigger to manual removes any delay,
   but clearing a trigger or delay doesn't cancel runs already scheduled: they still go ahead.
 
-## 5. Verify and hand over
+## 5. Word the emails (optional)
+
+`get_workflow_emails` shows the workflow's five built-in emails (`invite`, `signingRequest`,
+`signingCompletion`, `documentRequest` and `moduleAdded`, sent when an advisor switches a module
+on) and the `{{tokens}}` each may use. `update_workflow_email` changes one. These emails **aren't
+versioned**: a change reaches every deal's next send straight away, live deals included. Show the
+user the wording and get a yes first.
+
+## 6. Verify and hand over
 
 1. `get_workflow` and compare against the agreed plan: step order, stage types, every item on
    the right step, every form item showing its form name.
@@ -137,4 +171,6 @@ Read the message and fix the call. Don't retry it unchanged.
 - To remove a workflow you created by mistake, use `delete_workflow(workflowTemplateId)`. It only
   works on a Draft workflow with no deals at all (test deals count). Ask the user first. Published
   or used workflows are refused: the user deletes those in ZiplineOS.
-- *"Item type '…' is not supported yet"*: only the five types above are available.
+- *"Item type '…' is not supported yet"*: only the six types above are available.
+- A `Subject` item refused with a permission error: the user's role lacks "Workflow Item:
+  Subject". An admin turns it on in ZiplineOS. Don't build a stand-in (see `build-a-module`).

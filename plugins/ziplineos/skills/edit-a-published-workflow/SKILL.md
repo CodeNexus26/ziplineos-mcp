@@ -7,13 +7,15 @@ description: Safe procedure for changing a ZiplineOS workflow that is already Pu
 
 The connector edits a workflow's **Release Candidate** (RC): the next version, waiting to go
 live. Every structure tool (`add_step`, `update_step`, `add_item`, `update_item`, `move_item`,
-`reorder_*`, `set_item_rules`, `set_step_rules`, `delete_*`, `update_workflow`) changes the RC and
-nothing else. The RC reaches only **test and preview deals**. Live deals keep running the version
+`reorder_*`, `set_item_rules`, `set_step_rules`, `delete_*`, `update_workflow`, and the applicant
+role tools `add_applicant_role`, `update_applicant_role`, `delete_applicant_role`) changes the RC
+and nothing else. The RC reaches only **test and preview deals**. Live deals keep running the version
 that was last published, until a person **publishes the workflow in ZiplineOS**. The connector
 can't publish a workflow.
 
 Drafts and merging are done in ZiplineOS, not through the connector. Forms work differently:
-they're versioned on their own (see "Editing forms that are in use").
+they're versioned on their own (see "Editing forms that are in use"). So do the workflow's emails
+(see "Things that reach every deal at once").
 
 ## Words to use with the user
 
@@ -51,6 +53,28 @@ draft.
 An **Archived** workflow is refused too: *"Workflow '…' is Archived. Unarchive it in ZiplineOS
 before editing."* Unarchiving is done in ZiplineOS.
 
+## Things that reach every deal at once
+
+Some changes skip the Release Candidate. Show the user exactly what will change and get a yes
+first:
+
+- **Workflow emails.** `update_workflow_email` (`invite`, `signingRequest`, `signingCompletion`,
+  `documentRequest`, `moduleAdded`) changes every deal's next send straight away, live deals
+  included. There is no publish step.
+- **A workflow that has never been published** (status Draft, check with `list_workflows`). Its
+  deals read the forms' current fields, its applicant roles and its items' `scope`,
+  `minInstances`, `maxInstances` and `applicableRoles` directly. Each `add_field`, `update_field`,
+  `delete_field`, role change or item ownership change reaches those deals as soon as you make it.
+- **Raising an applicant role's limit** from one person numbers the people already in it on every
+  open deal straight away.
+
+## Modules
+
+A module (`Subject` item) is switched on or off per deal by people in ZiplineOS; the connector
+only sets which modules exist and whether new deals start with each one on (`defaultIncluded`).
+Changing `defaultIncluded` affects new deals only. Moving a module or one of its forms to another
+step ungroups it, so move the module and all its members together. See `build-a-module`.
+
 ## Editing forms that are in use
 
 Forms aren't part of the workflow's Release Candidate. `add_field`, `update_field` and
@@ -74,7 +98,8 @@ confirmation:
 - `archive_form`: removes the form from every workflow item that links it. Existing deal
   snapshots are kept. `unarchive_form` brings the form back as a Draft, but doesn't restore the
   links.
-- `delete_step` (also deletes its items), `delete_item`, `delete_field`.
+- `delete_step` (also deletes its items), `delete_item`, `delete_field`, `delete_applicant_role`.
+- `update_workflow_email`: reaches every deal's next send at once.
 - `discard_form_changes`.
 - Setting a trigger or delay on an Action or Integration item: it runs on every test and preview
   deal that qualifies, and Integrations may make paid calls.

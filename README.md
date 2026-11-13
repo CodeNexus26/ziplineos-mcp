@@ -13,16 +13,22 @@ An AI assistant that supports MCP can sign in **as you** and use ZiplineOS tools
 
 - find workflows, forms and questions by name;
 - create forms and add, edit, reorder, show/hide or remove questions;
-- create workflows and add or rearrange stages and items (forms, checklists, documents), set an
+- create workflows and add or rearrange stages, applicant roles and items (forms, checklists,
+  documents), choose who fills each item and how many entries it takes, set an
   Integration item's results display or a team role on an item, test a calculation integration on
   sample answers, and delete a Draft workflow that has no deals;
+- build **modules**: named groups of forms, like small workflows inside the main one, that new
+  deals start with switched on or off and that you switch on or off for each deal in ZiplineOS;
+- reword the workflow's built-in emails (welcome, signing, document request, module added);
+- tag questions so the ZiplineOS Chrome extension can fill other websites (such as Platform Plus);
 - change a published workflow's Release Candidate (the next version), which test and preview
   deals run straight away and live deals get once you publish it in ZiplineOS;
 - where your organisation has it switched on, build and test Logic calculation engines;
 - if you are an Owner or Admin, set your brand colour and logos and tune AI document settings
   (confidence thresholds, document categories and naming formats).
 
-It **can't** publish a workflow or a calculation engine; you do that in ZiplineOS. It doesn't
+It **can't** publish a workflow or a calculation engine, or switch a module on or off for a deal;
+you do those in ZiplineOS. It doesn't
 work with workflow drafts: it edits the Release Candidate only. It can only see and change what
 your own ZiplineOS account can, in your own organisation. It doesn't read or change deals, contacts or
 client data, and it withholds the extra email addresses and phone numbers stored as recipients
@@ -60,12 +66,16 @@ stop and ask you before anything goes live.
 |---|---|
 | [build-a-workflow](plugins/ziplineos/skills/build-a-workflow/SKILL.md) | Building a new workflow end to end |
 | [edit-a-published-workflow](plugins/ziplineos/skills/edit-a-published-workflow/SKILL.md) | Edit the Release Candidate, hand over for publishing, and editing forms that are in use |
+| [choose-scope-and-entries](plugins/ziplineos/skills/choose-scope-and-entries/SKILL.md) | Shared or per-applicant items, one entry or several, repeating groups |
+| [build-a-module](plugins/ziplineos/skills/build-a-module/SKILL.md) | Modules: optional groups of forms switched on or off per deal |
 | [form-field-conventions](plugins/ziplineos/skills/form-field-conventions/SKILL.md) | Keys, types, ordering, show/hide rules, money fields, safe edits |
 | [fact-find-patterns](plugins/ziplineos/skills/fact-find-patterns/SKILL.md) | Common shapes for Australian mortgage fact finds |
 | [build-a-calculation-engine](plugins/ziplineos/skills/build-a-calculation-engine/SKILL.md) | Building, testing and publishing a Logic calculation engine |
+| [tag-questions-for-the-form-filler](plugins/ziplineos/skills/tag-questions-for-the-form-filler/SKILL.md) | Tagging questions so the Chrome extension can fill Platform Plus and other websites |
 | [set-up-branding-and-documents](plugins/ziplineos/skills/set-up-branding-and-documents/SKILL.md) | Brand colour and logos, and AI document settings and categories (Owner or Admin) |
 
-Each client guide explains how to load them. For Microsoft Copilot and ChatGPT, paste
+The server also serves its own up-to-date guides through the `get_guide` tool, so an assistant
+without these skills can still read the rules. Each client guide explains how to load the skills. For Microsoft Copilot and ChatGPT, paste
 [microsoft/agent-instructions.md](microsoft/agent-instructions.md) into the agent's instructions.
 
 Not sure what to ask first? See [prompts/](prompts/).

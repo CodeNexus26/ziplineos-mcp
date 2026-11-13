@@ -14,7 +14,10 @@ through it. Follow these steps in order. Don't invent settings that aren't in th
   Logic calculation engines in the user's own organisation. `test_integration` runs a calculation
   integration on sample answers and saves nothing. For Owners and Admins, the org settings tools
   (`get_branding`, `update_branding`, the document AI settings and category tools) change the
-  organisation's branding and AI document settings.
+  organisation's branding and AI document settings. The question-tag tools
+  (`list_question_tags`, `set_question_tags`, `delete_question_tag`, `list_data_points`,
+  `get_profile_coverage`) set up the ZiplineOS Chrome extension form filler.
+- `get_guide` serves the server's own authoring guides, which always match the current tools.
 
 ## 1. Work out the client
 
@@ -60,11 +63,14 @@ Don't call any tool that changes data as a test.
 
 ## 5. When you use the tools
 
-Read the skills before you change anything. The rules that matter most:
+Read the skills before you change anything, and call `get_guide` (no name lists the guides) for
+the server's current guidance. The rules that matter most:
 
 - Resolve workflows and forms **by name**. Never ask the user for ids.
 - `update_field`, `update_step` and `update_item` change only what you pass. Never re-send
   unchanged attributes.
+- Ask before changing a workflow email (`update_workflow_email` reaches every deal's next send at
+  once, live deals included).
 - Ask before publishing a form that is in use, archiving, deleting (`delete_workflow`,
   `delete_engine`, `delete_document_category`), changing branding or AI document settings, or
   discarding.
@@ -74,3 +80,7 @@ Read the skills before you change anything. The rules that matter most:
 - If a tool says the workflow "has a draft loaded in its editor", don't retry or work around it.
   Ask the user to switch the editor back to the Release Candidate in ZiplineOS (see the
   `edit-a-published-workflow` skill).
+- A module is a `Subject` item: a group of forms on one step that people switch on or off per
+  deal in ZiplineOS. No tool switches it for a deal; `defaultIncluded` sets how new deals start.
+- If the user asks for something ZiplineOS can do but no tool can, call `report_capability_gap`
+  with a generic description (never the user's data), then keep helping.
